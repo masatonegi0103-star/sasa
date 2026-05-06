@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>TextAlive Test</title>
+</head>
+<body>
+  <h1>TextAlive Test</h1>
+
+  <script src="https://unpkg.com/textalive-app-api/dist/index.js"></script>
+  <script>
+    // ←ここに自分のトークンを貼る
+    const TOKEN = "lvh8O7GhfpbIUR0v";
+
+    const player = new TextAliveApp.Player({
+      app: { token: TOKEN }
+    });
+
+    player.addListener({
+      onAppReady: (app) => {
+        console.log("App Ready");
+
+        if (!app.managed) {
+          player.createFromSongUrl("https://piapro.jp/t/9xg_");
+        }
+      },
+
+      onVideoReady: () => {
+        console.log("Video Ready");
+        player.requestPlay();
+      },
+
+      onError: (e) => {
+        console.error("エラー:", e);
+      }
+    });
+  </script>
+</body>
+</html>
