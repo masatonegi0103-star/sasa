@@ -6,36 +6,41 @@
 </head>
 <body>
   <h1>TextAlive Test</h1>
-  <button id="play">再生</button>
 
-<script src="https://unpkg.com/textalive-app-api/dist/index.js"></script>
-<script>
-  const player = new TextAliveApp.Player({
-    app: { token: "lvh8O7GhfpbIUR0v" }
-  });
+  <!-- 再生ボタン（最初は無効） -->
+  <button id="play" disabled>再生</button>
 
-  player.addListener({
-    onAppReady: (app) => {
-      console.log("App Ready");
+  <script src="https://unpkg.com/textalive-app-api/dist/index.js"></script>
+  <script>
+    const playButton = document.getElementById("play");
 
-      if (!app.managed) {
-        player.createFromSongUrl("https://piapro.jp/t/9xg_");
+    const player = new TextAliveApp.Player({
+      app: { token: "lvh8O7GhfpbIUR0v" }
+    });
+
+    player.addListener({
+      onAppReady: (app) => {
+        console.log("App Ready");
+        if (!app.managed) {
+          player.createFromSongUrl("https://piapro.jp/t/9xg_");
+        }
+      },
+
+      onVideoReady: () => {
+        console.log("Video Ready");
+        // ここで初めて再生可能になる
+        playButton.disabled = false;
+      },
+
+      onError: (e) => {
+        console.error("エラー:", e);
       }
-    },
+    });
 
-    onVideoReady: () => {
-      console.log("Video Ready");
-      player.requestPlay();
-    },
-
-    onError: (e) => {
-      console.error("エラー:", e);
-    }
-  });
-    document.getElementById("play").onclick = () => {
+    playButton.onclick = () => {
       console.log("Play button clicked");
       player.requestPlay();
-  };
+    };
   </script>
 </body>
 </html>
