@@ -6,6 +6,7 @@
 </head>
 <body>
   <h1>TextAlive Test</h1>
+  <button id="play">再生</button>
 
 <script src="https://unpkg.com/textalive-app-api/dist/index.js"></script>
 <script>
@@ -31,6 +32,10 @@
       console.error("エラー:", e);
     }
   });
-</script>
+    document.getElementById("play").onclick = () => {
+      console.log("Play button clicked");
+      player.requestPlay();
+  };
+  </script>
 </body>
 </html>
